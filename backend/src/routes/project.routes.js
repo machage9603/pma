@@ -1,5 +1,6 @@
 const express = require('express');
 const { protect } = require('../middleware/auth.middleware');
+const taskRoutes = require('./task.routes');
 const {
   createProject,
   getProjects,
@@ -25,5 +26,7 @@ router
   .delete(deleteProject);
 
 router.post('/:id/members', addProjectMember);
+
+router.use('/:projectId/tasks', taskRoutes);
 
 module.exports = router;
