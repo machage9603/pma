@@ -5,8 +5,8 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Project Management System',
-  description: 'Collaborative project management platform',
+  title: 'Blembod',
+  description: 'Project management App',
 }
 
 export default function RootLayout({ children }) {
