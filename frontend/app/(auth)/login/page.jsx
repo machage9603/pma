@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux'
-import { loginUser } from '@/store/slices/authSlice'
+import { loginUser } from '../../store/slices/authSlice'
 
 export default function LoginPage() {
   const [credentials, setCredentials] = useState({ email: '', password: '' })

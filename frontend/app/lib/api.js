@@ -1,21 +1,23 @@
-import { cookies } from 'next/headers'
+'use client'
 
-async function fetchApi(endpoint, options = {}) {
-  const cookieStore = cookies()
-  const token = cookieStore.get('token')
+const api = {
+  post: async (endpoint, data) => {
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
 
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${endpoint}`, {
-    ...options,
-    headers: {
-      ...options.headers,
-      'Authorization': `Bearer ${token?.value}`,
-      'Content-Type': 'application/json',
-    },
-  })
+    if (!response.ok) {
+      throw new Error('API request failed');
+    }
 
-  if (!response.ok) {
-    throw new Error('API request failed')
-  }
+    return {
+      data: await response.json(),
+    };
+  },
+};
 
-  return response.json()
-}
+export default api;

@@ -1,5 +1,4 @@
-mport { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import api from '../../utils/api';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchProjects = createAsyncThunk(
   'projects/fetchAll',
