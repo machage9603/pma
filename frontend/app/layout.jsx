@@ -4,6 +4,7 @@ import './globals.css';
 import React from 'react';
 import Link from 'next/link';
 import { Menu, X, Github, Twitter, Linkedin, Facebook, Instagram } from 'lucide-react';
+import { ReduxProvider } from './components/Provider';
 
 const RootLayout = ({ children }) => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -111,7 +112,9 @@ const RootLayout = ({ children }) => {
 
           {/* Main Content */}
           <main className="flex-grow pt-20">
+            <ReduxProvider>
             {children}
+            </ReduxProvider>
           </main>
 
           {/* Footer */}
