@@ -1,4 +1,5 @@
-import { useState } from 'react';
+"use client";
+
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 
@@ -44,3 +45,5 @@ const Sidebar = () => {
     </div>
   );
 };
+
+export default Sidebar;

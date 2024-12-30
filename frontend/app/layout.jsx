@@ -18,7 +18,7 @@ const RootLayout = ({ children }) => {
               <div className="flex justify-between items-center h-20">
                 {/* Logo */}
                 <Link href="/" className="text-2xl font-bold text-indigo-600 flex items-center">
-                  PMPlatform
+                  Blembod
                 </Link>
 
                 {/* Desktop Navigation */}

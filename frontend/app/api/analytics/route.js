@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { auth } from '@/lib/auth'
+
 
 export async function GET(request) {
   try {
@@ -22,7 +22,7 @@ export async function GET(request) {
       trendData,
       performanceData
     ] = await Promise.all([
-      // Add your database queries here
+      // Add database queries here
       // prisma.project.findMany(), etc.
     ])
 

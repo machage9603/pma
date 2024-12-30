@@ -1,7 +1,7 @@
-
+'use client'
 import { useState, useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import api from '../../utils/api';
+import api from '../../lib/api';
 
 const TASK_STATUS = {
   TODO: 'To Do',

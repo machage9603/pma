@@ -1,6 +1,7 @@
+'use client'
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import api from '../../utils/api';
+import { useRouter } from 'next/navigation';
+import api from '../../lib/api';
 
 export const ProjectDetail = () => {
   const router = useRouter();
