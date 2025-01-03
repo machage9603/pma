@@ -56,7 +56,7 @@ export default function LoginPage() {
             onClick={handleGoogleLogin}
           >
             <img
-              src="/api/placeholder/20/20"
+              src="#"
               alt="Google"
               className="mr-2 h-5 w-5"
             />
