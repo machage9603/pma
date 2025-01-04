@@ -10,10 +10,11 @@ const projectData = [
   { name: 'Apr', completed: 5, ongoing: 6 }
 ];
 
-const DashboardPage = () => {
+export default function DashboardPage() {
   return (
     <div className="p-6 space-y-6">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Profile Card */}
         <Card className="lg:col-span-1">
           <CardHeader>
             <CardTitle>Profile</CardTitle>
@@ -45,6 +46,7 @@ const DashboardPage = () => {
           </CardContent>
         </Card>
 
+        {/* Stats Grid */}
         <div className="lg:col-span-2 grid grid-cols-2 gap-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -92,6 +94,7 @@ const DashboardPage = () => {
         </div>
       </div>
 
+      {/* Charts and Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
@@ -141,6 +144,4 @@ const DashboardPage = () => {
       </div>
     </div>
   );
-};
-
-export default DashboardPage;
+}
