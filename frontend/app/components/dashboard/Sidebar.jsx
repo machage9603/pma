@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 
-const Sidebar = () => {
+export const Sidebar = () => {
   const { user } = useSelector((state) => state.auth);
 
   return (
@@ -45,5 +45,3 @@ const Sidebar = () => {
     </div>
   );
 };
-
-export default Sidebar;

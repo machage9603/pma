@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../store/slices/authSlice';
 
-const Header = () => {
+export const Header = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
