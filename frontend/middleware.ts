@@ -1,11 +1,9 @@
 // middleware.ts
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export function middleware(request) {
+export function middleware(request: NextRequest) {
   const token = request.cookies.get('token')?.value;
   const url = request.nextUrl;
-
-  // Public paths that don't require authentication
   const publicPaths = ['/', '/login', '/register'];
 
   // Don't apply middleware to API routes and public assets

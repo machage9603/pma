@@ -4,7 +4,7 @@ import './globals.css';
 import React from 'react';
 import Link from 'next/link';
 import { Menu, X, Github, Twitter, Linkedin, Facebook, Instagram } from 'lucide-react';
-import { ReduxProvider } from './components/Provider';
+import { ReduxProvider } from './Provider';
 
 const RootLayout = ({ children }) => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);

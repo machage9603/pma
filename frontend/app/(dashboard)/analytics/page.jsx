@@ -1,9 +1,5 @@
-// app/(dashboard)/analytics/page.jsx
+import AnalyticsPageClient from './AnalyticsPageClient'
+
 export default function AnalyticsPage() {
-    return (
-      <div className="space-y-6">
-        <h1 className="text-2xl font-semibold">Analytics Dashboard</h1>
-        <AnalyticsDashboard />
-      </div>
-    )
-  }
+  return <AnalyticsPageClient />
+}
