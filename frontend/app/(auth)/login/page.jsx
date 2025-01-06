@@ -55,7 +55,7 @@ export default function LoginPage() {
             className="w-full"
             onClick={handleGoogleLogin}
           >
-            <img
+            <image
               src="#"
               alt="Google"
               className="mr-2 h-5 w-5"
