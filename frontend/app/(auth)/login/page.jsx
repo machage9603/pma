@@ -21,14 +21,14 @@ export default function LoginPage() {
     e.preventDefault()
     try {
       await dispatch(loginUser(credentials)).unwrap()
-      router.push('/dashboard')
+      router.push('/profile')
     } catch (error) {
       console.error('Login failed:', error)
     }
   }
 
   const handleGoogleLogin = async () => {
-    // Implement Google OAuth login logic here
+    // Google OAuth login logic here
     console.log('Google login clicked')
   }
 
