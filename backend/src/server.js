@@ -26,9 +26,3 @@ mongoose.connect(MONGODB_URI)
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-
-// Move this middleware to app.js since it's Express middleware
-app.use((req, res, next) => {
-  req.io = io;
-  next();
-});

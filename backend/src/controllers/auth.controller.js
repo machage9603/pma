@@ -71,7 +71,7 @@ const login = async (req, res) => {
 // @desc    Get user profile
 // @route   GET /api/auth/profile
 // @access  Private
-const getProfile = async (req, res) => {
+const getUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
     res.json({
@@ -87,5 +87,5 @@ const getProfile = async (req, res) => {
 module.exports = {
   register,
   login,
-  getProfile,
+  getUserProfile,
 };
