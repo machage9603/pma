@@ -115,6 +115,7 @@ const RootLayout = ({ children }) => {
             <ReduxProvider>
             {children}
             </ReduxProvider>
+            <Script src="https://accounts.google.com/gpt/client" strategy="lazyOnload" />
           </main>
 
           {/* Footer */}

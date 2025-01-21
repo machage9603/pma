@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux'
 import { registerUser } from '../../store/slices/authSlice'
@@ -12,6 +12,8 @@ import { Separator } from "@/app/components/ui/separator"
 import Link from 'next/link'
 import { Mail, Lock, User, ArrowRight } from 'lucide-react'
 import { Checkbox } from "@/app/components/ui/checkbox"
+import { googleConfig } from '../../utils/google-auth'
+import Script from 'next/script'
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -22,6 +24,59 @@ export default function RegisterPage() {
   })
   const dispatch = useDispatch()
   const router = useRouter()
+
+  useEffect(() => {
+    const initializeGoogleAuth = () => {
+      window.google?.accounts.id.initialize({
+        client_id: googleConfig.clientId,
+        callback: handleGoogleResponse
+        });
+    }
+  }, []);
+
+  const handleGoogleRegister = () => {
+    window.google?.accounts.id.prompt((notification) => {
+      if (notification.isNotDisplayed()) {
+        console.error('Google Sign-In popup was not displayed:', notification.getNotDisplayedReason());
+      } else if (notification.isSkippedMoment()) {
+        console.warn('User skipped Google Sign-In:', notification.getSkippedReason());
+      }
+    });
+  };
+
+  const handleGoogleResponse = async (response) => {
+    if (!response.credential) {
+      console.error('Google authentication failed: No credential received');
+      return;
+    }
+
+    try {
+      // Send the token to your backend
+      const result = await fetch('/api/auth/google', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          credential: response.credential,
+        }),
+      });
+
+      if (!result.ok) {
+        throw new Error('Failed to authenticate with the server');
+      }
+
+      const userData = await result.json();
+
+      // Dispatch user data to Redux store
+      await dispatch(registerUser(userData)).unwrap();
+
+      router.push('/register');
+    } catch (error) {
+      console.error('Google authentication failed:', error);
+    }
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -37,10 +92,7 @@ export default function RegisterPage() {
     }
   }
 
-  const handleGoogleRegister = async () => {
-    // Implement Google OAuth registration logic here
-    console.log('Google registration clicked')
-  }
+
 
   const handleChange = (e) => {
     const { name, value } = e.target
