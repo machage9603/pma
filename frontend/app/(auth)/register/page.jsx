@@ -45,35 +45,13 @@ export default function RegisterPage() {
   };
 
   const handleGoogleResponse = async (response) => {
-    if (!response.credential) {
-      console.error('Google authentication failed: No credential received');
-      return;
-    }
-
-    try {
-      // Send the token to your backend
-      const result = await fetch('/api/auth/google', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          credential: response.credential,
-        }),
-      });
-
-      if (!result.ok) {
-        throw new Error('Failed to authenticate with the server');
+    if (response.credential) {
+      try {
+        await dispatch(registerWithGoogle(response.credential)).unwrap();
+        router.push('/dashboard');
+      } catch (error) {
+        console.error('Google registration failed:', error);
       }
-
-      const userData = await result.json();
-
-      // Dispatch user data to Redux store
-      await dispatch(registerUser(userData)).unwrap();
-
-      router.push('/register');
-    } catch (error) {
-      console.error('Google authentication failed:', error);
     }
   };
 

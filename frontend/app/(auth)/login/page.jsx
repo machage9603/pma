@@ -11,11 +11,29 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { Separator } from "@/app/components/ui/separator"
 import Link from 'next/link'
 import { Mail, Lock, ArrowRight } from 'lucide-react'
+import { googleConfig } from '../../utils/google-auth'
+import Script from 'next/script'
+
 
 export default function LoginPage() {
   const [credentials, setCredentials] = useState({ email: '', password: '' })
   const dispatch = useDispatch()
   const router = useRouter()
+
+  useEffect(() => {
+    // Initialize Google OAuth
+    const initializeGoogleAuth = () => {
+      window.google?.accounts.id.initialize({
+        client_id: googleConfig.clientId,
+        callback: handleGoogleResponse
+      });
+    };
+
+    // Load Google OAuth script
+    if (window.google?.accounts) {
+      initializeGoogleAuth();
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -27,10 +45,26 @@ export default function LoginPage() {
     }
   }
 
-  const handleGoogleLogin = async () => {
-    // Google OAuth login logic here
-    console.log('Google login clicked')
+  const handleGoogleLogin = () => {
+    window.google?.accounts.id.prompt((notification) => {
+      if (notification.isNotDisplayed()) {
+        console.error('Google Sign-In popup was not displayed:', notification.getNotDisplayedReason());
+      } else if (notification.isSkippedMoment()) {
+        console.warn('User skipped Google Sign-In:', notification.getSkippedReason());
+      }
+    });
   }
+
+  const handleGoogleResponse = async (response) => {
+    if (response.credential) {
+      try {
+        await dispatch(authenticateWithGoogle(response.credential)).unwrap();
+        router.push('/profile');
+      } catch (error) {
+        console.error('Google login failed:', error);
+      }
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target
