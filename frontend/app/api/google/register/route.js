@@ -3,11 +3,21 @@
 import { NextResponse } from 'next/server'
 import { OAuth2Client } from 'google-auth-library'
 
-const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
+const client = new OAuth2Client({
+  clientId: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+});
 
 export async function POST(request) {
   try {
     const { credential } = await request.json()
+
+    if (!credential) {
+      return NextResponse.json(
+        { error: 'Missing credential' },
+        { status: 400 }
+      )
+    }
 
     // Verify the Google token
     const ticket = await client.verifyIdToken({
@@ -22,7 +32,7 @@ export async function POST(request) {
       email: payload.email,
       name: payload.name,
       picture: payload.picture,
-      // Add any other fields you need
+      // Add any other fields
     }
 
     // add logic for user authentication

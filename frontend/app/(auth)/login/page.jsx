@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux'
 import { loginUser } from '../../store/slices/authSlice'
@@ -89,7 +89,7 @@ export default function LoginPage() {
             className="w-full"
             onClick={handleGoogleLogin}
           >
-            <image
+            <img
               src="#"
               alt="Google"
               className="mr-2 h-5 w-5"
