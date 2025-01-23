@@ -7,7 +7,7 @@ import { registerUser, registerWithGoogle } from '../../store/slices/authSlice'
 import { Button } from "../../components/ui/button"
 import { Input } from "../../components/ui/input"
 import { Label } from "../../components/ui/label"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/app/components/ui/card"
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/app/components/ui/card"
 import { Separator } from "@/app/components/ui/separator"
 import { Checkbox } from "@/app/components/ui/checkbox"
 import { Mail, Lock, User, ArrowRight, AlertCircle } from 'lucide-react'
@@ -25,6 +25,7 @@ export default function RegisterPage() {
   const [formErrors, setFormErrors] = useState({})
   const [termsAccepted, setTermsAccepted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [googleScriptLoaded, setGoogleScriptLoaded] = useState(false)
   const dispatch = useDispatch()
   const router = useRouter()
 
@@ -42,21 +43,41 @@ export default function RegisterPage() {
     }
   }, [dispatch, router])
 
-  useEffect(() => {
-    if (typeof window !== 'undefined' && window.google?.accounts) {
-      window.google.accounts.id.initialize({
-        client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-        callback: handleGoogleResponse,
-        auto_select: false,
-        context: 'signup',
-      })
+  const initializeGoogleSignUp = useCallback(() => {
+    if (window.google?.accounts) {
+      try {
+        //error log
+        console.log('Client ID:', process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID);
 
-      window.google.accounts.id.renderButton(
-        document.getElementById('googleSignInDiv'),
-        { theme: 'outline', size: 'large', width: '100%', type: 'standard' }
-      )
+        window.google.accounts.id.initialize({
+          client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+          callback: handleGoogleResponse,
+          auto_select: false,
+          context: 'signup',
+          ux_mode: 'popup',
+        })
+
+        const googleSignInDiv = document.getElementById('googleSignInDiv')
+        if (googleSignInDiv) {
+          window.google.accounts.id.renderButton(googleSignInDiv, {
+            theme: 'outline',
+            size: 'large',
+            width: '300',
+            type: 'standard',
+            text: 'signup_with',
+          })
+        }
+      } catch (error) {
+        console.error('Google Sign-Up initialization error:', error)
+      }
     }
   }, [handleGoogleResponse])
+
+  useEffect(() => {
+    if (googleScriptLoaded) {
+      initializeGoogleSignUp()
+    }
+  }, [googleScriptLoaded, initializeGoogleSignUp])
 
   const validateForm = () => {
     const errors = {}
@@ -84,7 +105,7 @@ export default function RegisterPage() {
     setIsLoading(true)
     try {
       await dispatch(registerUser(formData)).unwrap()
-      router.push('/dashboard')
+      router.push('/login')
     } catch (error) {
       setFormErrors({ submit: 'Registration failed. Please try again.' })
     } finally {
@@ -109,13 +130,10 @@ export default function RegisterPage() {
       <Script
         src="https://accounts.google.com/gsi/client"
         strategy="lazyOnload"
-        onLoad={() => {
-          if (window.google?.accounts) {
-            window.google.accounts.id.initialize({
-              client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-              callback: handleGoogleResponse,
-            })
-          }
+        onLoad={() => setGoogleScriptLoaded(true)}
+        onError={(error) => {
+          console.error('Google Script Load Error:', error)
+          setFormErrors({ google: 'Failed to load Google Sign-Up' })
         }}
       />
 
@@ -125,11 +143,7 @@ export default function RegisterPage() {
             <CardTitle className="text-2xl font-bold text-center">
               Create an account
             </CardTitle>
-            <CardDescription className="text-center">
-              Enter your details to create your account
-            </CardDescription>
           </CardHeader>
-
           <CardContent className="space-y-4">
             {formErrors.google && (
               <Alert variant="destructive">
@@ -146,7 +160,7 @@ export default function RegisterPage() {
               </div>
               <div className="relative flex justify-center text-xs uppercase">
                 <span className="bg-background px-2 text-muted-foreground">
-                  Or continue with email
+                  Or Enter your details
                 </span>
               </div>
             </div>
