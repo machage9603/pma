@@ -8,7 +8,7 @@ export async function POST(request) {
   try {
     const { credential } = await request.json()
 
-    // Verify the Google token
+    // Verify the Google toke
     const ticket = await client.verifyIdToken({
       idToken: credential,
       audience: process.env.GOOGLE_CLIENT_ID
