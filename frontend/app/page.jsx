@@ -4,24 +4,14 @@ import { ChevronRight, Users, CheckSquare, FolderGit2, Bell, Lock } from 'lucide
 const Home = () => {
   const features = [
     {
-      icon: <Lock className="w-12 h-12 text-indigo-500" />,
-      title: "Secure Authentication",
-      description: "Enterprise-grade security with role-based access control"
-    },
-    {
       icon: <Users className="w-12 h-12 text-indigo-500" />,
-      title: "Team Collaboration",
+      title: "Project Management & Collaboration",
       description: "Real-time collaboration with your team members"
     },
     {
       icon: <CheckSquare className="w-12 h-12 text-indigo-500" />,
       title: "Smart Task Management",
       description: "Intuitive task tracking and progress monitoring"
-    },
-    {
-      icon: <FolderGit2 className="w-12 h-12 text-indigo-500" />,
-      title: "File Management",
-      description: "Centralized file storage and version control"
     },
     {
       icon: <Bell className="w-12 h-12 text-indigo-500" />,

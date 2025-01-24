@@ -20,23 +20,11 @@ const RootLayout = ({ children }) => {
               <div className="flex justify-between items-center h-20">
                 {/* Logo */}
                 <Link href="/" className="text-2xl font-bold text-indigo-600 flex items-center">
-                  Blembod
+                  KaziPro
                 </Link>
 
                 {/* Desktop Navigation */}
                 <div className="hidden md:flex items-center space-x-8">
-                  <Link href="/features" className="text-gray-600 hover:text-indigo-600">
-                    Features
-                  </Link>
-                  <Link href="/solutions" className="text-gray-600 hover:text-indigo-600">
-                    Solutions
-                  </Link>
-                  <Link href="/pricing" className="text-gray-600 hover:text-indigo-600">
-                    Pricing
-                  </Link>
-                  <Link href="/docs" className="text-gray-600 hover:text-indigo-600">
-                    Resources
-                  </Link>
                   <div className="flex items-center space-x-4">
                     <Link href="/login" className="text-gray-600 hover:text-indigo-600">
                       Sign in
@@ -68,30 +56,6 @@ const RootLayout = ({ children }) => {
             {isMenuOpen && (
               <div className="md:hidden absolute w-full bg-white border-b border-gray-200">
                 <div className="px-4 py-6 space-y-4">
-                  <Link
-                    href="/features"
-                    className="block px-4 py-2 text-gray-600 hover:bg-indigo-50 rounded-lg"
-                  >
-                    Features
-                  </Link>
-                  <Link
-                    href="/solutions"
-                    className="block px-4 py-2 text-gray-600 hover:bg-indigo-50 rounded-lg"
-                  >
-                    Solutions
-                  </Link>
-                  <Link
-                    href="/pricing"
-                    className="block px-4 py-2 text-gray-600 hover:bg-indigo-50 rounded-lg"
-                  >
-                    Pricing
-                  </Link>
-                  <Link
-                    href="/docs"
-                    className="block px-4 py-2 text-gray-600 hover:bg-indigo-50 rounded-lg"
-                  >
-                    Resources
-                  </Link>
                   <div className="border-t border-gray-200 pt-4">
                     <Link
                       href="/login"
