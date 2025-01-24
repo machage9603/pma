@@ -4,6 +4,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/app/components/ui/card";
 import { BarChart, Activity, Users, CheckCircle, Calendar, Clock, Mail } from 'lucide-react';
 import { BarChart as RechartsBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { Button } from "@/app/components/ui/button";
 
 const projectData = [
   { name: 'Jan', completed: 4, ongoing: 3 },
@@ -15,41 +16,17 @@ const projectData = [
 export default function DashboardPage() {
   return (
     <div className="p-6 space-y-6">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Profile Card */}
-        <Card className="lg:col-span-1">
-          <CardHeader>
-            <CardTitle>Profile</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-col items-center space-y-4">
-              <div className="h-24 w-24 rounded-full bg-blue-100 flex items-center justify-center">
-                <Users className="h-12 w-12 text-blue-600" />
-              </div>
-              <div className="text-center">
-                <h2 className="text-xl font-bold">Sarah Johnson</h2>
-                <p className="text-gray-500">Project Manager</p>
-              </div>
-              <div className="w-full space-y-2">
-                <div className="flex items-center space-x-2">
-                  <Mail className="h-4 w-4 text-gray-500" />
-                  <span className="text-sm">sarah@example.com</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Clock className="h-4 w-4 text-gray-500" />
-                  <span className="text-sm">Joined Jan 2024</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Calendar className="h-4 w-4 text-gray-500" />
-                  <span className="text-sm">12 Active Projects</span>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Dashboard</h1>
+        <div className="space-x-2">
+          <Button variant="outline">This Week</Button>
+          <Button>Export</Button>
+        </div>
+      </div>
 
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Stats Grid */}
-        <div className="lg:col-span-2 grid grid-cols-2 gap-4">
+        <div className="lg:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium">My Projects</CardTitle>

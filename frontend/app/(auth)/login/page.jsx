@@ -69,7 +69,7 @@ export default function LoginPage() {
       setIsLoading(true)
       try {
         await dispatch(authenticateWithGoogle(response.credential)).unwrap()
-        router.push('/profile')
+        router.push('/dashboard')
       } catch (error) {
         setError('Google login failed. Please try again.')
       } finally {
