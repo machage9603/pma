@@ -1,28 +1,47 @@
-const socketIo = require('socket.io');
+const { Server } = require('socket.io');  // Modern import style
 
 const initializeSocket = (server) => {
-  const io = socketIo(server, {
+  const io = new Server(server, {  // Use 'new Server()' instead of 'socketIo()'
     cors: {
-      origin: process.env.FRONTEND_URL,
-      methods: ["GET", "POST"]
-    }
+      origin: process.env.FRONTEND_URL || "http://localhost:3000",  // Fallback for local dev
+      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],  // Match Express CORS methods
+      allowedHeaders: ["Content-Type", "Authorization"],  // Explicit headers
+      credentials: true  // Important for authenticated connections
+    },
+    path: "/socket.io"  // Explicit path (optional but recommended)
+  });
+
+  // Add error handling
+  io.on("error", (error) => {
+    console.error("Socket.IO Error:", error);
   });
 
   io.on('connection', (socket) => {
-    console.log('Client connected');
+    console.log(`Client connected: ${socket.id}`);
 
-    // Join project room
+    // Add socket error handling
+    socket.on('error', (error) => {
+      console.error(`Socket Error (${socket.id}):`, error);
+    });
+
+    // Join project room (add validation)
     socket.on('joinProject', (projectId) => {
-      socket.join(`project-${projectId}`);
+      if (typeof projectId === 'string') {
+        socket.join(`project-${projectId}`);
+        console.log(`${socket.id} joined project-${projectId}`);
+      }
     });
 
-    // Join task room
+    // Join task room (add validation)
     socket.on('joinTask', (taskId) => {
-      socket.join(`task-${taskId}`);
+      if (typeof taskId === 'string') {
+        socket.join(`task-${taskId}`);
+        console.log(`${socket.id} joined task-${taskId}`);
+      }
     });
 
-    socket.on('disconnect', () => {
-      console.log('Client disconnected');
+    socket.on('disconnect', (reason) => {
+      console.log(`Client disconnected (${socket.id}): ${reason}`);
     });
   });
 

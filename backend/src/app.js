@@ -33,7 +33,7 @@ app.get('/', (req, res) => {
 
 // Express middleware
 app.use((req, res, next) => {
-  req.io = io;
+  req.io = req.app.get('io'); // Access the Socket.IO instance through req.io;
   next();
 });
 
