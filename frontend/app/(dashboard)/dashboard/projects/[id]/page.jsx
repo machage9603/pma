@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
-import { ProjectDetail } from '../../../components/projects/ProjectDetail'
-import { TaskBoard } from '../../../components/tasks/TaskBoard'
+import { ProjectDetail } from '@/app/components/projects/ProjectDetail'
+import { TaskBoard } from '@/app/components/tasks/TaskBoard'
 
 export default function ProjectPage({ params }) {
   return (
