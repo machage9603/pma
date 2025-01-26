@@ -1,132 +1,112 @@
 'use client';
 
 import React, { useState } from 'react';
+import { User, LogOut, Settings, Upload } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from "@/app/components/ui/avatar";
 import { Button } from "@/app/components/ui/button";
 import { Input } from "@/app/components/ui/input";
-import { Avatar, AvatarImage, AvatarFallback } from "@/app/components/ui/avatar";
-import { LogOut, User, Mail, Edit, Trash } from 'lucide-react';
-import useUserProfile from '@/app/lib/useUserProfile';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription
+} from "@/app/components/ui/dialog";
 
-export default function ProfileSidebar({ isOpen, onClose, onLogout }) {
-  const { user, error } = useUserProfile();
-  const [editing, setEditing] = useState(false);
-  const [name, setName] = useState(user?.name || '');
-  const [email, setEmail] = useState(user?.email || '');
-  const [avatar, setAvatar] = useState(user?.avatar || null);
+export default function ProfileSidebar({ isOpen, onClose, user, onUpdateUser, onLogout }) {
+  const [avatarFile, setAvatarFile] = useState(null);
+  const [name, setName] = useState(user.name);
+  const [email, setEmail] = useState(user.email);
 
-  if (error) return <div className="text-red-500">{error}</div>;
-  if (!user) return <div>Loading...</div>;
-
-  const handleSave = () => {
-    // Update user data
-    setEditing(false);
-  };
-
-  const handleAvatarChange = (e) => {
-    const file = e.target.files[0];
+  const handleAvatarUpload = (event) => {
+    const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setAvatar(reader.result);
+        setAvatarFile(reader.result);
+        onUpdateUser({ ...user, avatar: reader.result });
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleRemoveAvatar = () => {
-    setAvatar(null);
+  const handleSaveChanges = () => {
+    onUpdateUser({ ...user, name, email, avatar: avatarFile || user.avatar });
+    onClose();
   };
 
   return (
-    <div className={`fixed inset-y-0 right-0 w-96 bg-white shadow-lg transform transition-transform ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-      <div className="p-6">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-bold">Profile</h2>
-          <Button variant="ghost" onClick={onClose}>
-            <LogOut className="h-4 w-4" />
-          </Button>
-        </div>
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="w-96">
+        <DialogHeader>
+          <DialogTitle>Profile</DialogTitle>
+        </DialogHeader>
 
-        <div className="flex flex-col items-center space-y-4">
-          <Avatar className="h-24 w-24">
-            {avatar ? (
-              <AvatarImage src={avatar} alt="Profile" />
-            ) : (
-              <AvatarFallback>
-                <User className="h-12 w-12" />
-              </AvatarFallback>
-            )}
-          </Avatar>
-          <div className="flex space-x-2">
-            <input
-              type="file"
-              id="avatar-upload"
-              className="hidden"
-              onChange={handleAvatarChange}
-            />
+        <DialogDescription className="sr-only">
+          Manage your profile settings including avatar, name, and email
+        </DialogDescription>
+
+        <div className="mt-6 space-y-6">
+          {/* Avatar Section */}
+          <div className="flex flex-col items-center">
+            <Avatar className="h-24 w-24 mb-4">
+              <AvatarImage src={avatarFile || user.avatar} />
+              <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+            </Avatar>
             <label htmlFor="avatar-upload" className="cursor-pointer">
-              <Button variant="outline">
-                <Edit className="h-4 w-4 mr-2" />
-                Change Avatar
+              <Button variant="outline" className="w-full">
+                <Upload className="mr-2 h-4 w-4" /> Change Avatar
               </Button>
+              <Input
+                id="avatar-upload"
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleAvatarUpload}
+              />
             </label>
-            {avatar && (
-              <Button variant="outline" onClick={handleRemoveAvatar}>
-                <Trash className="h-4 w-4 mr-2" />
-                Remove
-              </Button>
-            )}
           </div>
-        </div>
 
-        <div className="mt-6 space-y-4">
-          <div>
-            <label className="text-sm font-medium">Name</label>
-            {editing ? (
-              <Input value={name} onChange={(e) => setName(e.target.value)} />
-            ) : (
-              <div className="flex items-center space-x-2">
-                <User className="h-4 w-4 text-gray-500" />
-                <p>{name}</p>
-              </div>
-            )}
+          {/* Name and Email Section */}
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Name</label>
+              <Input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="mt-1"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Email</label>
+              <Input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="mt-1"
+              />
+            </div>
           </div>
-          <div>
-            <label className="text-sm font-medium">Email</label>
-            {editing ? (
-              <Input value={email} onChange={(e) => setEmail(e.target.value)} />
-            ) : (
-              <div className="flex items-center space-x-2">
-                <Mail className="h-4 w-4 text-gray-500" />
-                <p>{email}</p>
-              </div>
-            )}
-          </div>
-        </div>
 
-        <div className="mt-6 flex justify-end space-x-2">
-          {editing ? (
-            <>
-              <Button variant="outline" onClick={() => setEditing(false)}>
-                Cancel
-              </Button>
-              <Button onClick={handleSave}>Save</Button>
-            </>
-          ) : (
-            <Button onClick={() => setEditing(true)}>
-              <Edit className="h-4 w-4 mr-2" />
-              Edit Profile
+          {/* Settings Section */}
+          <div className="space-y-2">
+            <Button variant="outline" className="w-full">
+              <Settings className="mr-2 h-4 w-4" /> Settings
             </Button>
-          )}
-        </div>
+          </div>
 
-        <div className="mt-6">
-          <Button variant="destructive" onClick={onLogout} className="w-full">
-            <LogOut className="h-4 w-4 mr-2" />
-            Logout
-          </Button>
+          {/* Save and Logout Buttons */}
+          <div className="space-y-2">
+            <Button className="w-full" onClick={handleSaveChanges}>
+              Save Changes
+            </Button>
+            <Button variant="destructive" className="w-full" onClick={onLogout}>
+              <LogOut className="mr-2 h-4 w-4" /> Logout
+            </Button>
+          </div>
         </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 }

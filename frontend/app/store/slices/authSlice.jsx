@@ -17,7 +17,7 @@ export const authenticateWithGoogle = createAsyncThunk(
   async (credential, { rejectWithValue }) => {
     try {
       console.log('Google authentication attempt');
-      const response = await api.post('/api/auth/google/login', { credential });
+      const response = await api.post('/api/auth/google', { credential });
       console.log('Google auth API response:', response.data);
       return handleAuthResponse(response);
     } catch (error) {
