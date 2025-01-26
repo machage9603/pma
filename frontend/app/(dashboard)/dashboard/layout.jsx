@@ -15,7 +15,8 @@ import {
   Users,
   Plus,
   Menu,
-  X
+  X,
+  List
 } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/app/components/ui/avatar";
 import { Button } from "@/app/components/ui/button";
@@ -39,12 +40,13 @@ export default function DashboardLayout({ children }) {
       {/* Sidebar */}
       <div className="w-64 bg-white shadow-md hidden md:block">
         <div className="p-6 border-b">
-          <h1 className="text-2xl font-bold text-blue-600">ProManager</h1>
+          <h1 className="text-2xl font-bold text-blue-600">Manager</h1>
         </div>
         <nav className="p-4 space-y-2">
           <SidebarLink href="/dashboard" icon={<Home />} label="Home" />
-          <SidebarLink href="/reports" icon={<BarChart />} label="Reports" />
+          <SidebarLink href="/analytics" icon={<BarChart />} label="Analytics" />
           <SidebarLink href="/projects" icon={<Folder />} label="Projects" />
+          <SidebarLink href="/tasks" icon={<List/>} label="Tasks" />
           <div className="pt-4 border-t">
             <Button className="w-full" variant="outline">
               <UserPlus className="mr-2 h-4 w-4" /> Invite Team
@@ -134,7 +136,7 @@ export default function DashboardLayout({ children }) {
         <DialogContent className="h-full w-64 top-0 left-0 right-auto translate-x-0 rounded-none">
           <DialogHeader>
             <DialogTitle className="flex items-center justify-between">
-              ProManager
+              Manager
               <Button
                 variant="ghost"
                 size="icon"
@@ -161,6 +163,12 @@ export default function DashboardLayout({ children }) {
               href="/projects"
               icon={<Folder />}
               label="Projects"
+              onClick={() => setIsMobileSidebarOpen(false)}
+            />
+            <SidebarLink
+              href="/tasks"
+              icon={<List />}
+              label="Tasks"
               onClick={() => setIsMobileSidebarOpen(false)}
             />
             <Button className="w-full mt-4" variant="outline">

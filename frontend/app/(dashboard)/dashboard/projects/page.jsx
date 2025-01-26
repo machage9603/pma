@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import { ProjectList } from '../../components/projects/ProjectList'
+import { ProjectList } from '@/app/components/projects/ProjectList'
 import { CreateProjectButton } from '@/app/components/projects/CreateProjectButton'
 
 export default function ProjectsPage() {
