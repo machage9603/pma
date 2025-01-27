@@ -1,36 +1,54 @@
-async function getProjects() {
-  try {
-    // Use absolute URL for server-side fetching
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-    const response = await fetch(`${baseUrl}/projects`, {
-      // Add cache control for static generation
-      cache: 'no-store', // or 'force-cache' if you want to cache the response
-    });
+'use client';
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch projects: ${response.statusText}`);
-    }
+import { useEffect, useState } from 'react';
+import { ProjectCard } from './ProjectCard';
+import { Skeleton } from '@/app/components/ui/skeleton';
+import { toast } from 'react-hot-toast';
 
-    return await response.json();
-  } catch (error) {
-    console.error('Error fetching projects:', error);
-    // Return an empty array or fallback data to prevent build failure
-    return [];
-  }
-}
+export const ProjectList = () => {
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-export async function ProjectList() {
-  const projects = await getProjects();
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/projects`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
 
-  if (!projects.length) {
-    return <div>No projects found.</div>;
+        const data = await response.json();
+
+        if (!response.ok) throw new Error(data.message || 'Failed to fetch projects');
+
+        setProjects(data);
+      } catch (error) {
+        toast.error(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {[1, 2, 3].map((i) => (
+          <Skeleton key={i} className="h-48 w-full rounded-lg" />
+        ))}
+      </div>
+    );
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {projects.map((project) => (
         <ProjectCard key={project._id} project={project} />
       ))}
     </div>
   );
-}
+};

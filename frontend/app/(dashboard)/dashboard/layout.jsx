@@ -86,7 +86,7 @@ export default function DashboardLayout({ children }) {
         <nav className="p-2 space-y-1">
           <SidebarLink href="/dashboard" icon={<Home />} label="Home" isOpen={isSidebarOpen} />
           <SidebarLink href="/analytics" icon={<BarChart />} label="Analytics" isOpen={isSidebarOpen} />
-          <SidebarLink href="/projects" icon={<Folder />} label="Projects" isOpen={isSidebarOpen} />
+          <SidebarLink href="/dashboard/projects" icon={<Folder />} label="Projects" isOpen={isSidebarOpen} />
           <SidebarLink href="/tasks" icon={<List />} label="Tasks" isOpen={isSidebarOpen} />
 
           <div className="pt-2 border-t">

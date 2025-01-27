@@ -5,6 +5,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Menu, X, Github, Twitter, Linkedin, Facebook, Instagram } from 'lucide-react';
 import { ReduxProvider } from './Provider';
+import { Toaster } from 'react-hot-toast';
 import Script from 'next/script';
 
 const RootLayout = ({ children }) => {
@@ -77,6 +78,7 @@ const RootLayout = ({ children }) => {
 
           {/* Main Content */}
           <main className="flex-grow pt-20">
+          <Toaster position="top-right" reverseOrder={false} />
             <ReduxProvider>
             {children}
             </ReduxProvider>

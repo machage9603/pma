@@ -6,7 +6,7 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get('token')?.value;
   const url = request.nextUrl;
 
-  const publicPaths = ['/', '/login', '/register'];
+  const publicPaths = ['/', '/login', '/register', '/dashboard/projects/create'];
 
   // Allow access to public paths, API routes, and static assets
   if (
