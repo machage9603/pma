@@ -16,9 +16,7 @@ const io = require('./socket')(server);
 // Add io to app for middleware usage
 app.set('io', io);
 
-connectDB();
-
-mongoose.connect(MONGODB_URI)
+connectDB()
   .then(() => console.log('🔥 Connected to MongoDB successfully!'))
   .catch((err) => console.error('💥 MongoDB connection failed:', err));
 
