@@ -78,9 +78,9 @@ const RootLayout = ({ children }) => {
 
           {/* Main Content */}
           <main className="flex-grow pt-20">
-          <Toaster position="top-right" reverseOrder={false} />
+            <Toaster position="top-right" reverseOrder={false} />
             <ReduxProvider>
-            {children}
+              {children}
             </ReduxProvider>
             <Script src="https://accounts.google.com/gpt/client" strategy="lazyOnload" />
           </main>
@@ -91,7 +91,7 @@ const RootLayout = ({ children }) => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
                 {/* Company Info */}
                 <div className="space-y-4">
-                  <h3 className="text-2xl font-bold text-white mb-6">PMPlatform</h3>
+                  <h3 className="text-2xl font-bold text-white mb-6">KaziPro</h3>
                   <p className="text-gray-400">
                     Empowering teams to achieve more through seamless collaboration and efficient project management.
                   </p>
@@ -141,7 +141,7 @@ const RootLayout = ({ children }) => {
               </div>
 
               <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
-                <p>&copy; {new Date().getFullYear()} PMPlatform. All rights reserved.</p>
+                <p>&copy; {new Date().getFullYear()} KaziPro. All rights reserved.</p>
               </div>
             </div>
           </footer>

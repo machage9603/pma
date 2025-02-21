@@ -34,9 +34,6 @@ const Home = () => {
               Transform the way your team collaborates. Experience seamless project management with real-time updates and powerful tools.
             </p>
             <div className="flex justify-center gap-6">
-              <button className="bg-white text-indigo-600 px-8 py-4 rounded-full font-semibold hover:bg-indigo-50 transition-all duration-300 shadow-lg hover:shadow-xl">
-                Start Free Trial
-              </button>
               <button className="border border-white px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition-all duration-300">
                 Start for free
               </button>
@@ -59,7 +56,7 @@ const Home = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => (
               <div key={index}
-                   className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100">
+                className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100">
                 <div className="mb-6 bg-indigo-50 w-16 h-16 rounded-xl flex items-center justify-center">
                   {feature.icon}
                 </div>
