@@ -1,6 +1,6 @@
 'use client'
 
-import { AnalyticsDashboard } from '@/app/components/analytics/AnalyticsDashboard'
+import AnalyticsDashboard from '@/app/components/analytics/AnalyticsDashboard'
 
 export default function AnalyticsPageClient() {
   return (
