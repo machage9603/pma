@@ -31,7 +31,6 @@
     "mongoose": "^8.9.5",
     "next": "^15.1.2",
     "react": "^19.0.0",
-    "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
     "react-hot-toast": "^2.5.1",
