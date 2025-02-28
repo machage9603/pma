@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { ChevronRight, Users, CheckSquare, Bell, Github, Twitter, Linkedin, ArrowRight, Menu, X } from 'lucide-react';
 import Link from 'next/link';
+import FeatureCarousel from './components/FeatureCarousel';
 
 const Home = () => {
   const [stars, setStars] = useState([]);
@@ -180,7 +181,7 @@ const Home = () => {
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           {/* Top left dashboard */}
           <div
-            className="absolute top-[10%] left-[5%] w-64 h-48 bg-[#1a1b2e] rounded-lg shadow-xl border border-gray-800 opacity-70 rotate-[-6deg] transform"
+            className="absolute top-[20%] left-[5%] w-64 h-48 bg-[#1a1b2e] rounded-lg shadow-xl border border-gray-800 opacity-70 rotate-[-6deg] transform"
             style={{
               animation: "float 8s ease-in-out infinite",
               backgroundImage: "linear-gradient(rgba(26, 27, 46, 0.9), rgba(26, 27, 46, 0.9)), url('/dashboard-bg-1.svg')",
@@ -221,7 +222,7 @@ const Home = () => {
 
           {/* Top right dashboard */}
           <div
-            className="absolute top-[15%] right-[5%] w-80 h-60 bg-[#1a1b2e] rounded-lg shadow-xl border border-gray-800 opacity-75 rotate-[8deg] transform"
+            className="absolute top-[20%] right-[5%] w-80 h-60 bg-[#1a1b2e] rounded-lg shadow-xl border border-gray-800 opacity-75 rotate-[8deg] transform"
             style={{
               animation: "float 9s ease-in-out infinite",
               animationDelay: "0.5s",
@@ -241,7 +242,7 @@ const Home = () => {
 
           {/* Bottom right dashboard with user count like in the image */}
           <div
-            className="absolute bottom-[20%] right-[8%] w-64 h-48 bg-[#1a1b2e] rounded-lg shadow-xl border border-gray-800 opacity-90 rotate-[-5deg] transform"
+            className="absolute bottom-[10%] right-[15%] w-64 h-48 bg-[#1a1b2e] rounded-lg shadow-xl border border-gray-800 opacity-90 rotate-[-5deg] transform"
             style={{
               animation: "float 8s ease-in-out infinite",
               animationDelay: "1.5s"
@@ -285,35 +286,7 @@ const Home = () => {
   `}</style>
       </section>
 
-      {/* Features Section */}
-      <section className="py-32 bg-[#0f101a]">
-        <div className="container mx-auto px-6">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-4xl font-bold mb-4 text-white">
-              Complete Visibility
-            </h2>
-            <p className="text-xl text-gray-400">
-              Powerful features to help your team succeed
-            </p>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <div key={index}
-                className="bg-[#171827] p-8 rounded-2xl border border-gray-800 hover:border-blue-900 transition-all duration-300 group hover:translate-y-[-4px]">
-                <div className="mb-6 bg-blue-900/20 w-16 h-16 rounded-xl flex items-center justify-center group-hover:bg-blue-900/30 transition-all">
-                  {feature.icon}
-                </div>
-                <h3 className="text-2xl font-semibold mb-3 text-white">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-400 leading-relaxed">
-                  {feature.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <FeatureCarousel />
 
       {/* Metrics Section */}
       <section className="py-24 bg-[#131525]">
